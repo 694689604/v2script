@@ -171,14 +171,11 @@ zipRoot() {
 }
 
 downloadV2Ray(){
-	echo "downloadV2Ray..."
     rm -rf /tmp/v2ray
     mkdir -p /tmp/v2ray
     if [[ "${DIST_SRC}" == "jsdelivr" ]]; then
-		echo "download by cdn"
         DOWNLOAD_LINK="https://cdn.jsdelivr.net/gh/v2fly/dist/v2ray-linux-${VDIS}.zip"
     else
-		echo "download by github"
         DOWNLOAD_LINK="https://github.com/v2fly/v2ray-core/releases/download/${NEW_VER}/v2ray-linux-${VDIS}.zip"
     fi
     colorEcho ${BLUE} "Downloading V2Ray: ${DOWNLOAD_LINK}"
@@ -186,8 +183,6 @@ downloadV2Ray(){
     if [ $? != 0 ];then
         colorEcho ${RED} "Failed to download! Please check your network or try again."
         return 3
-	else
-		echo "downloadV2Ray finish"
     fi
     return 0
 }
@@ -307,15 +302,11 @@ startV2ray(){
 installV2Ray(){
     # Install V2Ray binary to /usr/bin/v2ray
     mkdir -p '/etc/v2ray' '/var/log/v2ray' && \
-    #unzip -oj "$1" "$2v2ray" "$2v2ctl" "$2geoip.dat" "$2geosite.dat" -d '/usr/bin/v2ray' && \
-	unzip -oj "$1" "$2v2ray" "$2geoip.dat" "$2geosite.dat" -d '/usr/bin/v2ray' && \
-	echo "installV2Ray unzip finish"
-    #chmod +x '/usr/bin/v2ray/v2ray' '/usr/bin/v2ray/v2ctl' || {
-	chmod +x '/usr/bin/v2ray/v2ray' || {
+    unzip -oj "$1" "$2v2ray" "$2v2ctl" "$2geoip.dat" "$2geosite.dat" -d '/usr/bin/v2ray' && \
+    chmod +x '/usr/bin/v2ray/v2ray' '/usr/bin/v2ray/v2ctl' || {
         colorEcho ${RED} "Failed to copy V2Ray binary and resources."
         return 1
     }
-	echo "installV2Ray chmod finish"
 
     # Install V2Ray server config to /etc/v2ray
     if [ ! -f '/etc/v2ray/config.json' ]; then
@@ -410,10 +401,10 @@ remove(){
 }
 
 checkUpdate(){
-    echo "Checking for update."
     VERSION=""
     getVersion
     RETVAL="$?"
+	NEW_VER="v4.31.0"
     if [[ $RETVAL -eq 1 ]]; then
         colorEcho ${BLUE} "Found new version ${NEW_VER} for V2Ray.(Current version:$CUR_VER)"
     elif [[ $RETVAL -eq 0 ]]; then
@@ -471,7 +462,6 @@ main(){
     fi
 
     local ZIPROOT="$(zipRoot "${ZIPFILE}")"
-	echo "ZIPROOT is ${ZIPROOT}"
     installSoftware unzip || return $?
 
     if [ -n "${EXTRACT_ONLY}" ]; then
@@ -490,7 +480,6 @@ main(){
         V2RAY_RUNNING=1
         stopV2ray
     fi
-	echo "installV2Ray with ${ZIPFILE} and ${ZIPROOT}"
     installV2Ray "${ZIPFILE}" "${ZIPROOT}" || return $?
     installInitScript "${ZIPFILE}" "${ZIPROOT}" || return $?
     if [[ ${V2RAY_RUNNING} -eq 1 ]];then
