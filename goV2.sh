@@ -171,6 +171,7 @@ zipRoot() {
 }
 
 downloadV2Ray(){
+    NEW_VER="v4.31.0"
     rm -rf /tmp/v2ray
     mkdir -p /tmp/v2ray
     if [[ "${DIST_SRC}" == "jsdelivr" ]]; then
