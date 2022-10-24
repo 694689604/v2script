@@ -141,6 +141,7 @@ archAffix(){
 }
 
 zipRoot() {
+	echo "start zipRoot"
     unzip -lqq "$1" | awk -e '
         NR == 1 {
             prefix = $4;
@@ -171,11 +172,14 @@ zipRoot() {
 }
 
 downloadV2Ray(){
+	echo "downloadV2Ray..."
     rm -rf /tmp/v2ray
     mkdir -p /tmp/v2ray
     if [[ "${DIST_SRC}" == "jsdelivr" ]]; then
+		echo "download by cdn"
         DOWNLOAD_LINK="https://cdn.jsdelivr.net/gh/v2fly/dist/v2ray-linux-${VDIS}.zip"
     else
+		echo "download by github"
         DOWNLOAD_LINK="https://github.com/v2fly/v2ray-core/releases/download/${NEW_VER}/v2ray-linux-${VDIS}.zip"
     fi
     colorEcho ${BLUE} "Downloading V2Ray: ${DOWNLOAD_LINK}"
@@ -183,6 +187,8 @@ downloadV2Ray(){
     if [ $? != 0 ];then
         colorEcho ${RED} "Failed to download! Please check your network or try again."
         return 3
+	else
+		echo "downloadV2Ray finish"
     fi
     return 0
 }
