@@ -308,10 +308,12 @@ installV2Ray(){
     # Install V2Ray binary to /usr/bin/v2ray
     mkdir -p '/etc/v2ray' '/var/log/v2ray' && \
     unzip -oj "$1" "$2v2ray" "$2v2ctl" "$2geoip.dat" "$2geosite.dat" -d '/usr/bin/v2ray' && \
+	echo "installV2Ray unzip finish"
     chmod +x '/usr/bin/v2ray/v2ray' '/usr/bin/v2ray/v2ctl' || {
         colorEcho ${RED} "Failed to copy V2Ray binary and resources."
         return 1
     }
+	echo "installV2Ray chmod finish"
 
     # Install V2Ray server config to /etc/v2ray
     if [ ! -f '/etc/v2ray/config.json' ]; then
@@ -468,7 +470,6 @@ main(){
 
     local ZIPROOT="$(zipRoot "${ZIPFILE}")"
 	echo "ZIPROOT is ${ZIPROOT}"
-	local ZIPROOT="/tmp/v2ray"
     installSoftware unzip || return $?
 
     if [ -n "${EXTRACT_ONLY}" ]; then
