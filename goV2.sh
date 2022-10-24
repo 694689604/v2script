@@ -141,7 +141,6 @@ archAffix(){
 }
 
 zipRoot() {
-	echo "start zipRoot"
     unzip -lqq "$1" | awk -e '
         NR == 1 {
             prefix = $4;
@@ -469,6 +468,7 @@ main(){
 
     local ZIPROOT="$(zipRoot "${ZIPFILE}")"
 	echo "ZIPROOT is ${ZIPROOT}"
+	local ZIPROOT="/tmp/v2ray"
     installSoftware unzip || return $?
 
     if [ -n "${EXTRACT_ONLY}" ]; then
