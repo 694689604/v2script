@@ -482,8 +482,8 @@ EOF
 }
 
 startNginx() {
-	echo "nginx path: ${NGINX_CONF_PATH}${domain}.conf"
-	nginx -c "${NGINX_CONF_PATH}${domain}.conf"
+	echo "nginx path: ${NGINX_CONF_PATH}${DOMAIN}.conf"
+	nginx -c "${NGINX_CONF_PATH}${DOMAIN}.conf"
     if [[ "$BT" = "false" ]]; then
         systemctl start nginx
     else
