@@ -330,7 +330,7 @@ installV2Ray(){
 installInitScript(){
     if [[ -n "${SYSTEMCTL_CMD}" ]] && [[ ! -f "/etc/systemd/system/v2ray.service" && ! -f "/lib/systemd/system/v2ray.service" ]]; then
         #unzip -oj "$1" "$2systemd/system/v2ray.service" -d '/etc/systemd/system'
-        wget -O /etc/systemd/system/v2ray.service https://raw.githubusercontent.com/hijkpw/scripts/master/v2ray.service
+        wget -O /etc/systemd/system/v2ray.service https://raw.githubusercontent.com/694689604/v2script/main/v2ray.service
         systemctl enable v2ray.service
     elif [[ -n "${SERVICE_CMD}" ]] && [[ ! -f "/etc/init.d/v2ray" ]]; then
         #installSoftware 'daemon' && \
