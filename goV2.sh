@@ -333,7 +333,7 @@ installInitScript(){
         wget -O /etc/systemd/system/v2ray.service https://raw.githubusercontent.com/hijkpw/scripts/master/v2ray.service
         systemctl enable v2ray.service
     elif [[ -n "${SERVICE_CMD}" ]] && [[ ! -f "/etc/init.d/v2ray" ]]; then
-        installSoftware 'daemon' && \
+        #installSoftware 'daemon' && \
         unzip -oj "$1" "$2systemv/v2ray" -d '/etc/init.d' && \
         chmod +x '/etc/init.d/v2ray' && \
         update-rc.d v2ray defaults
